@@ -1,22 +1,3 @@
-/**
- * Coffee Extension – Content Script v1.2
- *
- * FIXES:
- * 1. Re-entrant loop fix: uses WeakSet lock so our own re-dispatched
- *    'change' event never triggers a second processing pass.
- *
- * 2. File type detection: previously checked file.type.startsWith('image/')
- *    but browsers often set MIME type to "" for inputs that accept="*" or
- *    accept is unset. Now we ALSO check the file extension as a fallback,
- *    so images selected from any file input are always processed.
- *
- * 3. Double-add on multi-image sites: the re-dispatched 'change' event was
- *    being picked up by the site's own handler a second time, adding files
- *    again. Fixed by only dispatching framework-notification events once the
- *    lock ensures our listener won't re-enter, and by using a stable
- *    Object.defineProperty so the new FileList is observable.
- */
-
 'use strict';
 
 (() => {
